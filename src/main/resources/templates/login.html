@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: LatoWeb, Lato, Helvetica, sans-serif, Arial;
+        }
+        
+        @media screen and (max-width: 600px) {
+            .centered {
+                width: 50%;
+                margin-top: 0;
+            }
+            .flex-container {
+                display: flex;
+            }
+            .btn-submit {
+                width: 100px;
+            }
+        }
+        
+        .btn-submit {
+            cursor: pointer;
+            outline: none;
+            width: 100px;
+            text-align: center;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #126c93;
+            padding: 10px;
+        }
+        
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+        
+        .left {
+            left: 0;
+            background-color: #095D82;
+        }
+        
+        .right {
+            right: 0;
+            background-color: white;
+            color: #095D82
+        }
+        
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            float: left;
+            margin-top: 6px;
+        }
+        
+        .centered img {
+            width: 150px;
+            border-radius: 50%;
+        }
+        
+        .imagecenter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .imagecenter img {
+            width: 400px;
+        }
+        
+        .container {
+            padding: 16px;
+        }
+        
+        .form-wrapper {
+            width: 350px;
+        }
+        
+        .input-wrapper {
+            --height: 50px;
+            --width: 100%;
+            --font-size: 18px;
+            --top-ofset: 30%;
+            margin-bottom: 30px;
+            height: var(--height);
+            width: var(--width);
+            overflow: hidden;
+            position: relative;
+            text-align: left;
+        }
+        
+        .input-wrapper input {
+            background: none;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            height: calc(100% - var(--top-ofset));
+            width: 100%;
+            font-size: var(--font-size);
+            outline: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .input-wrapper label span {
+            color: rgba(0, 0, 0, 0.6);
+            bottom: 0;
+            left: 0;
+            height: calc(100% - var(--top-ofset));
+            width: 100%;
+            line-height: calc(var(--height)*0.8);
+            font-size: var(--font-size);
+            position: absolute;
+            pointer-events: none;
+            transition: ease-out 0.1s;
+            left: 0;
+        }
+        
+        .input-wrapper label::after {
+            content: '';
+            background: var(--focus-color);
+            height: 2px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transition: 0.2s;
+            transform: translateX(-100%);
+            left: 0;
+            animation: backwards;
+            background-image: linear-gradient(#095d82, #989695);
+        }
+        
+        .input-wrapper input:focus+label span,
+        .input-wrapper input:valid+label span {
+            color: var(--focus-color);
+            font-size: calc(var(--font-size) * 0.7);
+            transform-origin: top left;
+            transform: translateY(calc(-100% + var(--top-ofset)));
+        }
+        
+        .input-wrapper input:focus+label::after {
+            transform: translateX(0);
+        }
+        
+        .btn-submit:hover {
+            background-color: #0987ca;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="split left">
+        <div class="imagecenter">
+            <img src="/images/login.png" alt="Help Me" style="max-width: 100%; height: auto;border: 2px solid white;">
+        </div>
+    </div>
+
+    <div class="split right">
+        <div style="float: right;">Version- 1.1.0</div>
+        <div class="centered">
+            <h1>Login</h1>
+            <div th:text="${msg}" id="errormsg"></div>
+            <form class="form-wrapper" action="/login" method="post">
+
+                <div class="input-wrapper">
+                    <input type="text" name="username" id="username" autocomplete='off' required />
+                    <label><span>Username</span></label>
+                </div>
+
+                <div class="input-wrapper">
+                    <input type="password" name="password" id="password" autocomplete='off' required />
+                    <label><span>Password</span></label>
+                </div>
+
+                <div class="flex-container">
+                    <button class="btn-submit" type="submit">Login</button>
+                    <!-- <input class="btn-submit" type="submit" value = "Login"> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    let btn = document.querySelector('.btn-submit');
+    let msg = document.getElementById('errormsg');
+    msg.style.display = 'none';
+    btn.addEventListener("click", function() {
+        msg.style.display = 'block';
+    })
+</script>
+
+</html>
